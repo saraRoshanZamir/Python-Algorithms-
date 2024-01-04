@@ -1,0 +1,34 @@
+from parameters import *
+from init_population import init_population
+from fitness import is_check
+from mutation import mutation
+from cross_over import cross_over
+
+
+current_population = init_population(N, ps)
+current_population = is_check(current_population)
+current_population=sorted(current_population, key=lambda x:x[-1])
+if current_population[0][-1]=='1':
+    print("solution found in init population:")
+    
+    print(current_population[0])
+    
+else:
+    for i in range(Epoch):
+        current_population = cross_over(current_population, N, ps)
+        current_population = mutation(current_population,N,ps,mr) 
+        current_population = is_check(current_population)
+        current_population = sorted(current_population, key=lambda x: (x[-2] != 1, x[-2]!=0))
+        current_population=sorted(current_population, key=lambda x:x[-1])
+        current_population=current_population[:ps]
+        if current_population[0][-1]=='1':
+            
+            
+            print("solution found ")
+            print(current_population[0])
+             
+            break
+        else:
+            pass
+    else:
+        print('sorry we couldnt found a solution')
